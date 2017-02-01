@@ -1,0 +1,13 @@
+{
+	"hello": "ahoj",
+	"Enter valid email": "Enter valid email",
+	"Password is required": "Password isssss required",
+	"Password must be at least 6 charaters long": "Password must be at least 6 charaters long",
+	"User with that email already exists": "User with that email already exists",
+	"Successfully registered. Please login": "Successfully registered. Please login",
+	"Successfully registered. Please login.": "Successfully registered. Please login.",
+	"User with that email does not exist.": "User with that email does not exist.",
+	"Invalid password.": "Invalid password.",
+	"Logout successful.": "Logout successful.",
+	"Please log in.": "Please log in."
+}
