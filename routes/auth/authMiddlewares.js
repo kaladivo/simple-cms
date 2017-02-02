@@ -21,6 +21,6 @@ export function* isLoggedIn(next) {
 export function* isNotLoggedIn(next) {
   if(this.isUnauthenticated()) return yield next;
   else {
-    this.redirect(settings.adminUrl + '/admin');
+    this.redirect(settings.adminUrl);
   }
 }
