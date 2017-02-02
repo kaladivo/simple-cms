@@ -40,6 +40,12 @@ function* validateRegistration(next) {
     return;
   }
 
+  const {password, passwordCheck} = this.request.body;
+  if(password !== passwordCheck) {
+    this.body = compileRegisterPage({errors: [i18n.__('Passwords do not match')], email: this.request.body.email});
+    return;
+  }
+
   return yield next;
 }
 
