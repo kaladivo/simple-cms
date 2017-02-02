@@ -1,5 +1,6 @@
 import i18n from 'i18n';
 import bcrypt from 'co-bcrypt';
+import {randomBytes} from 'co-crypto';
 
 import {getSettings} from '../settings'
 const settings = getSettings();
@@ -18,8 +19,7 @@ export function* createUser(email, password, data = {}) {
   if(yield users.findOne({email})) 
     throw new Error(i18n.__('User with that email already exists'));
 
-  const salt = yield bcrypt.genSalt(10);
-  const hash = yield bcrypt.hash(password, salt);
+  const hash = yield generatePasswordHash(password);
 
   return yield users.insert({
     email, 
@@ -29,8 +29,24 @@ export function* createUser(email, password, data = {}) {
   });
 }
 
+export function* generatePasswordHash(password) {
+  const salt = yield bcrypt.genSalt(10);
+  const hash = yield bcrypt.hash(password, salt);
+
+  return hash;
+}
+
 export function* verifyPassword(user, password) {
   return yield bcrypt.compare(password, user.password);
+}
+
+export function* generateResetToken(email) {
+  const token = (yield randomBytes(4)).toString('hex');
+  let user = yield users.findOneAndUpdate({email}, {$set: {resetToken: {token, createdAt: new Date()}}});
+  if(user.value === null) {
+    throw new Error(i18n.__("User with that email does not exist"));
+  }
+  return user;
 }
 
 export default users;

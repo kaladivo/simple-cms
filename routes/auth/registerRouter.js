@@ -1,6 +1,5 @@
 import Router from 'koa-router';
 import pug from 'pug';
-import KoaBody from 'koa-body';
 import i18n from 'i18n';
 
 import Settings from '../../settings';
@@ -32,6 +31,8 @@ function* validateRegistration(next) {
       email: 'lowercase',
     }
   })
+
+  //TODO check if password check match.
 
   if(this.validationErrors) {
     let errors = this.validationErrors.map(value => value[Object.keys(value)[0]].message);

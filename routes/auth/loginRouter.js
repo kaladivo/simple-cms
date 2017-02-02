@@ -9,7 +9,7 @@ import {isLoggedIn, isNotLoggedIn} from './authMiddlewares';
 const settings = Settings();
 
 let loginRouter = Router();
-loginRouter.use(KoaBody());
+// loginRouter.use(KoaBody());
 
 const compileLoginPage = pug.compileFile(settings.viewsDir + '/loginPage.pug');
 
