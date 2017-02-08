@@ -30,7 +30,7 @@ function* validateRegistration(next) {
     before: {
       email: 'lowercase',
     }
-  })
+  });
 
   //TODO check if password check match.
 

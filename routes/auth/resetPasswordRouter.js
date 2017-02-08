@@ -3,7 +3,6 @@ import pug from 'pug';
 import Settings from '../../settings';
 import i18n from 'i18n';
 import passport from 'passport';
-import KoaBody from 'koa-body';
 import {isLoggedIn, isNotLoggedIn} from './authMiddlewares';
 import users, {generateResetToken, generatePasswordHash} from '../../db/users';
 import emailTransporter from '../../emailTransporter';

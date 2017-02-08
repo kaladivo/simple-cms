@@ -7,7 +7,7 @@ function getSettings() {
   return mSettings;
 }
 
-export function initSettings(settings) {
+function initSettings(settings) {
   mSettings = injectDefaultValues(settings);
 }
 
@@ -15,6 +15,6 @@ function injectDefaultValues(settings) {
   return {...defaultSettings, ...settings};
 }
 
-export {getSettings};
+export {initSettings, getSettings};
 export default getSettings;
 
