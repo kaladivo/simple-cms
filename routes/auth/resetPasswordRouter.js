@@ -18,13 +18,13 @@ const compileResetPasswordEmail = pug.compileFile(settings.viewsDir + '/emailTem
 
 resetPasswordRouter.get("/", function*(next) {
   let errors = this.flash('errors');
-  this.body = compileRequestResetPasswordPage({errors});
+  this.body = compileRequestResetPasswordPage({settings,errors});
 });
-resetPasswordRouter.get("/:token", function*(next) {
-  this.body = compileResetPasswordPage();
+resetPasswordRouter.get("/:token", validateTokenInUrl, function*(next) {
+  this.body = compileResetPasswordPage({settings});
 });
 resetPasswordRouter.post("/", validateRequireReset, requestResetPassword);
-resetPasswordRouter.post("/:token", validateReset, resetPassword);
+resetPasswordRouter.post("/:token", validateTokenInUrl, validateReset, resetPassword);
 
 function* validateReset(next) {
   yield this.validateBody({
@@ -36,13 +36,13 @@ function* validateReset(next) {
 
   if(this.validationErrors) {
     let errors = this.validationErrors.map(value => value[Object.keys(value)[0]].message);
-    this.body = compileResetPasswordPage({errors});
+    this.body = compileResetPasswordPage({settings,errors});
     return;
   }
   
   const {password, passwordCheck} = this.request.body;
   if(password !== passwordCheck) {
-    this.body = compileResetPasswordPage({errors: [i18n.__('passwords do not match')]});
+    this.body = compileResetPasswordPage({settings, errors: [i18n.__('passwords do not match')]});
     return;
   }
   return yield next;
@@ -62,7 +62,7 @@ function* validateRequireReset(next) {
 
   if(this.validationErrors) {
     let errors = this.validationErrors.map(value => value[Object.keys(value)[0]].message);
-    this.body = compileRequestResetPasswordPage({errors: errors});
+    this.body = compileRequestResetPasswordPage({settings, errors: errors});
     return;
   }
 
@@ -77,7 +77,7 @@ function* requestResetPassword(next) {
     this.flash('message', i18n.__("Reset token was send please check your email."));
     this.redirect(settings.adminUrl + '/login');
   } catch (err) {
-    this.body = compileRequestResetPasswordPage({errors: [err.message]});
+    this.body = compileRequestResetPasswordPage({settings, errors: [err.message]});
   }
 }
 
@@ -93,12 +93,6 @@ function* resetPassword(next) {
     }, {$set: {password: hash}, $unset: {resetToken: 1}}
   );
 
-  if(user.value === null) {
-    this.flash("errors", i18n.__("Url is not valid, please request reset again."));
-    this.redirect(settings.adminUrl + "/resetPassword");
-    return;
-  }
-
   this.flash("message", i18n.__("Password was successfully changed. You can now login."))
   this.redirect(settings.adminUrl + "/login");
 }
@@ -109,10 +103,29 @@ function createAndSendResetMail(user) {
     from: settings.emailAddress,
     to: user.email,
     subject: i18n.__("Password reset"),
-    html: compileResetPasswordEmail({resetUrl})
+    html: compileResetPasswordEmail({settings, resetUrl})
   }
 
   emailTransporter.sendMail(message, (err, info) => {});
+}
+
+function* validateTokenInUrl(next) {
+  let mustBeGreaterThan = new Date();
+  mustBeGreaterThan.setMinutes(mustBeGreaterThan.getMinutes() - 10);
+
+  const userExist = (yield users.count({
+      "resetToken.token": this.params.token,
+      "resetToken.createdAt": {$gte: mustBeGreaterThan}
+    }
+  )) > 0;
+
+  if(!userExist) {
+    this.flash("errors", i18n.__("Url is not valid, please request reset again."));
+    this.redirect(settings.adminUrl + "/resetPassword");
+    return;
+  }
+
+  yield next;
 }
 
 export default resetPasswordRouter;
