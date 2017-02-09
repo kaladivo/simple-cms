@@ -13,7 +13,7 @@ export default class AddableList extends ParentSection{
     this.model.setParent(this);
   }
   
-  * renderHtml(request){
+  * renderHtml(request, response){
     const {id, action} = request.query;
     let messages = [];
 
@@ -28,14 +28,17 @@ export default class AddableList extends ParentSection{
     if(action == "new"){
       return yield this.model.renderHtml(request, {values:{}});
     }
-
     
+    let totalPages = Math.ceil((yield this.dbDocument.count()) / this.onOnePage);
+    if(request.query.page > totalPages) response.redirect(this.getUrl() + "/?page=" + totalPages);
 
     return pug.renderFile(settings().viewsDir + '/elements/sections/AddableList.pug', {
       section: this,
       settings: settings(),
       previewFields: this.previewFields, 
-      items: yield this._getItemsToRender(0),
+      items: yield this._getItemsToRender(request.query.page - 1),
+      totalPages,
+      page: request.query.page || 1,
       messages
     });
   }
@@ -48,7 +51,7 @@ export default class AddableList extends ParentSection{
   * _getItemsToRender(pageIndex) {
     // let previewFields = this.previewFields;
     let items = yield this.dbDocument.find({}, 
-      {limit: this.onOnePage, sort: this.sortQuery, skip: pageIndex}
+      {limit: this.onOnePage, sort: this.sortQuery, skip: pageIndex * this.onOnePage}
     );
     // let previewItems = items.map(item => {
     //   let result = [];

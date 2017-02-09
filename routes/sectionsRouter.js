@@ -18,7 +18,7 @@ sectionsRouter.use(findSection);
 sectionsRouter.get(/(.*)/, function*(next) {
   this.body = compileSectionPage({
     section: this.section,
-    sectionHtml: yield this.section.renderHtml(this.request)
+    sectionHtml: yield this.section.renderHtml(this.request, this.response)
    });
 });
 
