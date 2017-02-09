@@ -1,8 +1,8 @@
-import Section from './Section';
+import ParentSection from './ParentSection';
 import pug from 'pug';
 import settings from '../../settings';
 
-export default class Model extends Section {
+export default class Model extends ParentSection {
   constructor(data) {
     super(data);
     this.fields = data.fields;
@@ -26,7 +26,8 @@ export default class Model extends Section {
     let errors = yield this.validate(request);
     if(errors) return yield this.renderHtml(request, {errors, values: request.body});
 
-    return yield this.saveToDb(request.body, request);
+    let res = yield this.saveToDb(request.body, request);
+    return res;
   }
 
   * renderHtml(request, data = {}){

@@ -11,7 +11,7 @@ export default class AddableModel extends Model {
   * saveToDb(values, request) {
     let res;
     if(request.query.id){
-      res = yield this.parent.dbDocument.update(request.query.id, values);
+      res = yield this.parent.dbDocument.findOneAndUpdate(request.query.id, values);
     } else {
       res = yield this.parent.dbDocument.insert(values);
     }

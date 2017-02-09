@@ -30,7 +30,8 @@ export default class AddableList extends ParentSection{
     }
     
     let totalPages = Math.ceil((yield this.dbDocument.count()) / this.onOnePage);
-    if(request.query.page > totalPages) response.redirect(this.getUrl() + "/?page=" + totalPages);
+    if(request.query.page > totalPages) return response.redirect(this.getUrl() + "/?page=" + totalPages);
+    if(request.query.page < 1) return response.redirect(this.getUrl() + "/?page=1");
 
     return pug.renderFile(settings().viewsDir + '/elements/sections/AddableList.pug', {
       section: this,
@@ -45,6 +46,9 @@ export default class AddableList extends ParentSection{
 
   * savePost(request, response) {
     let savedPost = yield this.model.savePost(request);
+    if(!savedPost._id) {
+      return savedPost;
+    }
     if(!request.query.id) response.redirect(this.getUrl() + "/?id=" + savedPost._id);
   }
 

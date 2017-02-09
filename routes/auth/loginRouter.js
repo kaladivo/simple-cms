@@ -24,8 +24,9 @@ const compileLoginPage = pug.compileFile(settings.viewsDir + '/loginPage.pug');
 // Display login page.
 loginRouter.get('/', isNotLoggedIn, function*() {
   let args = {
-    message: this.flash('message'), 
+    messages: this.flash('message'), 
     errors: this.flash('error'), 
+    settings
   };
   this.body = compileLoginPage(args);
 });
@@ -46,7 +47,8 @@ loginRouter.post('/',
 
       this.body = compileLoginPage({
         errors: errors,
-        email: this.request.body.email
+        email: this.request.body.email,
+        settings
       });
     }
   },

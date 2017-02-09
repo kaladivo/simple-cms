@@ -14,7 +14,8 @@ const compileFrontPage = pug.compileFile(settings.viewsDir + '/frontPage.pug');
 frontPageRouter.get('/', isLoggedIn, function*(next) {
   this.body = compileFrontPage({
     user: this.req.user, 
-    settings
+    settings,
+    loggedUser: this.req.user
   })
 });
 

@@ -23,7 +23,8 @@ settingsRouter.get('/', function*(next) {
     users: fetchedUsers,
     currentUser: this.req.user,
     messages: this.flash('message'),
-    errors: this.flash('error')
+    errors: this.flash('error'),
+    loggedUser: this.req.user
   });
 });
 

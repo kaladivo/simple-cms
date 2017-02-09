@@ -38,9 +38,9 @@ const compileRegisterPage = pug.compileFile(settings.viewsDir + '/registerPage.p
 
 registerRouter.get('/', function*() {
   if(this.inviteToken) 
-    this.body = compileRegisterPage({email: this.inviteToken.forEmail, disableEmailInput: true});
+    this.body = compileRegisterPage({settings, email: this.inviteToken.forEmail, disableEmailInput: true});
   else
-    this.body = compileRegisterPage({});
+    this.body = compileRegisterPage({settings});
 });
 
 registerRouter.post('/', validateRegistration, registerUser);
@@ -67,13 +67,13 @@ function* validateRegistration(next) {
 
   if(this.validationErrors) {
     let errors = this.validationErrors.map(value => value[Object.keys(value)[0]].message);
-    this.body = compileRegisterPage({errors, email: this.request.body.email});
+    this.body = compileRegisterPage({settings, errors, email: this.request.body.email, disableEmailInput:this.inviteToken});
     return;
   }
 
   const {password, passwordCheck} = this.request.body;
   if(password !== passwordCheck) {
-    this.body = compileRegisterPage({errors: [i18n.__('Passwords do not match')], email: this.request.body.email});
+    this.body = compileRegisterPage({settings, errors: [i18n.__('Passwords do not match')], email: this.request.body.email, disableEmailInput:this.inviteToken});
     return;
   }
 
@@ -87,7 +87,7 @@ function* registerUser(next) {
     this.flash('message', i18n.__('Successfully registered. Please login.'));
     this.redirect(settings.adminUrl + '/login');
   }catch(err) {
-    this.body = compileRegisterPage({errors: [err.message]});
+    this.body = compileRegisterPage({settings, errors: [err.message], disableEmailInput:this.inviteToken});
   }
 }
 

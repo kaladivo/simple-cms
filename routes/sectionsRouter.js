@@ -16,17 +16,32 @@ sectionsRouter.use(isLoggedIn);
 sectionsRouter.use(findSection);
 
 sectionsRouter.get(/(.*)/, function*(next) {
+  let backInfo
+  if(this.request.query.id || this.request.query.action == "new")
+    backInfo = {url: this.section.getUrl(), title:"Back to " + this.section.title.toLowerCase()};
+
   this.body = compileSectionPage({
     section: this.section,
-    sectionHtml: yield this.section.renderHtml(this.request, this.response)
+    sectionHtml: yield this.section.renderHtml(this.request, this.response),
+    settings: settings,
+    backInfo,
+    loggedUser: this.req.user
    });
 });
 
 sectionsRouter.post(/(.*)/, function*(next) {
-  let savedDocument = yield this.section.savePost(this.request, this.response);
+  let result = yield this.section.savePost(this.request, this.response);
+  let sectionHtml;
+  // console.log(result);
+  if(!result || result._id)
+    sectionHtml = yield this.section.renderHtml(this.request, {values: result});
+  else 
+    sectionHtml = result;
   this.body = compileSectionPage({
     section: this.section,
-    sectionHtml: yield this.section.renderHtml(this.request, {values: savedDocument})
+    sectionHtml,
+    settings: settings,
+    loggedUser: this.req.user
    });
 })
 

@@ -30,5 +30,6 @@
 	"User invited": "User invited",
 	"Admin invitation": "Admin invitation",
 	"You have submitted the wrong email": "You have submitted the wrong email",
-	"User already registered": "User already registered"
+	"User already registered": "User already registered",
+	"passwords do not match": "passwords do not match"
 }
