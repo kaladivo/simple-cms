@@ -20,5 +20,15 @@
 	"Reset token was send please check your email.": "Reset token was send please check your email.",
 	"Url is not valid, please request reset again.": "Url is not valid, please request reset again.",
 	"Password was successfully changed. You can now login.": "Password was successfully changed. You can now login.",
-	"Passwords do not match": "Passwords do not match"
+	"Passwords do not match": "Passwords do not match",
+	"User removed": "User removed",
+	"You can not remove yourself": "You can not remove yourself",
+	"password changed": "password changed",
+	"password do not match": "password do not match",
+	"Please fill mail": "Please fill mail",
+	"Email already in database": "Email already in database",
+	"User invited": "User invited",
+	"Admin invitation": "Admin invitation",
+	"You have submitted the wrong email": "You have submitted the wrong email",
+	"User already registered": "User already registered"
 }

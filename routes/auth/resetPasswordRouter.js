@@ -16,15 +16,15 @@ const compileRequestResetPasswordPage = pug.compileFile(settings.viewsDir + '/re
 const compileResetPasswordPage = pug.compileFile(settings.viewsDir + '/resetPasswordPage.pug');
 const compileResetPasswordEmail = pug.compileFile(settings.viewsDir + '/emailTemplates/resetPasswordEmail.pug');
 
-resetPasswordRouter.get("/resetPassword", function*(next) {
+resetPasswordRouter.get("/", function*(next) {
   let errors = this.flash('errors');
   this.body = compileRequestResetPasswordPage({errors});
 });
-resetPasswordRouter.get("/resetPassword/:token", function*(next) {
+resetPasswordRouter.get("/:token", function*(next) {
   this.body = compileResetPasswordPage();
 });
-resetPasswordRouter.post("/resetPassword", validateRequireReset, requestResetPassword);
-resetPasswordRouter.post("/resetPassword/:token", validateReset, resetPassword);
+resetPasswordRouter.post("/", validateRequireReset, requestResetPassword);
+resetPasswordRouter.post("/:token", validateReset, resetPassword);
 
 function* validateReset(next) {
   yield this.validateBody({

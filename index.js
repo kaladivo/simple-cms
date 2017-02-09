@@ -54,13 +54,15 @@ export default function(settings) {
   const resetPasswordRouter = require('./routes/auth/resetPasswordRouter').default;
 
   const frontPageRouter = require('./routes/frontPageRouter').default;
+  const settingsRouter = require('./routes/settingsRouter').default;
   const sectionsRouter = require('./routes/sectionsRouter').default;
 
 
-  mainRouter.use(settings.adminUrl, resetPasswordRouter.routes(), resetPasswordRouter.allowedMethods());
-  mainRouter.use(settings.adminUrl, loginRouter.routes(), loginRouter.allowedMethods()); 
-  mainRouter.use(settings.adminUrl, registerRouter.routes(), registerRouter.allowedMethods()); 
+  mainRouter.use(settings.adminUrl + "/resetPassword", resetPasswordRouter.routes(), resetPasswordRouter.allowedMethods());
+  mainRouter.use(settings.adminUrl + "/login", loginRouter.routes(), loginRouter.allowedMethods()); 
+  mainRouter.use(settings.adminUrl + "/register", registerRouter.routes(), registerRouter.allowedMethods()); 
 
+  mainRouter.use(settings.adminUrl + "/settings", settingsRouter.routes(), settingsRouter.allowedMethods());
   mainRouter.use(settings.adminUrl, frontPageRouter.routes(), frontPageRouter.allowedMethods());
   mainRouter.use(settings.adminUrl, sectionsRouter.routes(), sectionsRouter.allowedMethods()); 
 
