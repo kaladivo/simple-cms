@@ -1,6 +1,6 @@
 {
   "name": "simple-cms",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Simple content management system build in node",
   "main": "compiled/index.js",
   "scripts": {
