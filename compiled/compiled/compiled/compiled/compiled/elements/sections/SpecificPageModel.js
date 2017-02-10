@@ -24,6 +24,16 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }return target;
+};
+
 var _createClass = function () {
   function defineProperties(target, props) {
     for (var i = 0; i < props.length; i++) {
@@ -92,8 +102,7 @@ var SpecificPageModel = function (_Model) {
 
     var _this = _possibleConstructorReturn(this, (SpecificPageModel.__proto__ || Object.getPrototypeOf(SpecificPageModel)).call(this, data));
 
-    _this.fetchFromDb = data.fetchFromDb.bind(_this);
-    _this.saveToDb = data.saveToDb.bind(_this);
+    _this.pageIdentification = _this.pageIdentification;
     return _this;
   }
 
@@ -132,6 +141,72 @@ var SpecificPageModel = function (_Model) {
           }
         }
       }, renderHtml, this);
+    })
+  }, {
+    key: 'saveToDb',
+    value: regeneratorRuntime.mark(function saveToDb(data) {
+      var result;
+      return regeneratorRuntime.wrap(function saveToDb$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.next = 2;
+              return pages.findOneAndUpdate(this.pageIdentification, _extends({}, data, this.pageIdentification));
+
+            case 2:
+              result = _context2.sent;
+
+              console.log(result);
+
+              if (!(result.value == null)) {
+                _context2.next = 7;
+                break;
+              }
+
+              _context2.next = 7;
+              return pages.insert(_extends({}, data, this.pageIdentification));
+
+            case 7:
+              return _context2.abrupt('return', result);
+
+            case 8:
+            case 'end':
+              return _context2.stop();
+          }
+        }
+      }, saveToDb, this);
+    })
+  }, {
+    key: 'fetchFromDb',
+    value: regeneratorRuntime.mark(function fetchFromDb() {
+      var res;
+      return regeneratorRuntime.wrap(function fetchFromDb$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.next = 2;
+              return pages.findOne(this.pageIdentification);
+
+            case 2:
+              _context3.t0 = _context3.sent;
+
+              if (_context3.t0) {
+                _context3.next = 5;
+                break;
+              }
+
+              _context3.t0 = {};
+
+            case 5:
+              res = _context3.t0;
+              return _context3.abrupt('return', res);
+
+            case 7:
+            case 'end':
+              return _context3.stop();
+          }
+        }
+      }, fetchFromDb, this);
     })
   }]);
 

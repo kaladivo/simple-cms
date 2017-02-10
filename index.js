@@ -52,7 +52,7 @@ export default function(settings) {
     let filename = this.params['0'].match(new RegExp("public\/(.*)$"))[1];
     yield send(this, filename,{root: settings.viewsPublicDir});
   })
-  
+
   //Routers
   const loginRouter = require('./routes/auth/loginRouter').default;
   const registerRouter = require('./routes/auth/registerRouter').default;

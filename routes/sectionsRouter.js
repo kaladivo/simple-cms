@@ -32,6 +32,10 @@ sectionsRouter.get(/(.*)/, function*(next) {
 sectionsRouter.post(/(.*)/, function*(next) {
   let result = yield this.section.savePost(this.request, this.response);
   let sectionHtml;
+
+  let backInfo;
+  if(this.request.query.id || this.request.query.action == "new")
+    backInfo = {url: this.section.getUrl(), title:"Back to " + this.section.title.toLowerCase()};
   // console.log(result);
   if(!result || result._id)
     sectionHtml = yield this.section.renderHtml(this.request, {values: result});
@@ -41,7 +45,8 @@ sectionsRouter.post(/(.*)/, function*(next) {
     section: this.section,
     sectionHtml,
     settings: settings,
-    loggedUser: this.req.user
+    loggedUser: this.req.user,
+    backInfo
    });
 })
 

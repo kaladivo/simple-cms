@@ -1,20 +1,40 @@
 'use strict';
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+var _typeof6 = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _typeof5 = typeof Symbol === "function" && _typeof6(Symbol.iterator) === "symbol" ? function (obj) {
+  return typeof obj === "undefined" ? "undefined" : _typeof6(obj);
+} : function (obj) {
+  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof6(obj);
+};
+
+var _typeof4 = typeof Symbol === "function" && _typeof5(Symbol.iterator) === "symbol" ? function (obj) {
+  return typeof obj === "undefined" ? "undefined" : _typeof5(obj);
+} : function (obj) {
+  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof5(obj);
+};
+
+var _typeof3 = typeof Symbol === "function" && _typeof4(Symbol.iterator) === "symbol" ? function (obj) {
+  return typeof obj === "undefined" ? "undefined" : _typeof4(obj);
+} : function (obj) {
+  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof4(obj);
+};
+
+var _typeof2 = typeof Symbol === "function" && _typeof3(Symbol.iterator) === "symbol" ? function (obj) {
+  return typeof obj === "undefined" ? "undefined" : _typeof3(obj);
+} : function (obj) {
+  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof3(obj);
+};
+
+var _typeof = typeof Symbol === "function" && _typeof2(Symbol.iterator) === "symbol" ? function (obj) {
+  return typeof obj === "undefined" ? "undefined" : _typeof2(obj);
+} : function (obj) {
+  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof2(obj);
+};
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _extends = Object.assign || function (target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i];for (var key in source) {
-      if (Object.prototype.hasOwnProperty.call(source, key)) {
-        target[key] = source[key];
-      }
-    }
-  }return target;
-};
 
 var _createClass = function () {
   function defineProperties(target, props) {
@@ -84,8 +104,8 @@ var SpecificPageModel = function (_Model) {
 
     var _this = _possibleConstructorReturn(this, (SpecificPageModel.__proto__ || Object.getPrototypeOf(SpecificPageModel)).call(this, data));
 
-    _this.pageIdentification = data.pageIdentification;
-    _this.dbDocument = data.dbDocument;
+    _this.fetchFromDb = data.fetchFromDb.bind(_this);
+    _this.saveToDb = data.saveToDb.bind(_this);
     return _this;
   }
 
@@ -124,73 +144,6 @@ var SpecificPageModel = function (_Model) {
           }
         }
       }, renderHtml, this);
-    })
-  }, {
-    key: 'saveToDb',
-    value: regeneratorRuntime.mark(function saveToDb(data) {
-      var result;
-      return regeneratorRuntime.wrap(function saveToDb$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              _context2.next = 2;
-              return this.dbDocument.findOneAndUpdate(this.pageIdentification, _extends({}, data, this.pageIdentification));
-
-            case 2:
-              result = _context2.sent;
-
-              if (!(result.value === null)) {
-                _context2.next = 7;
-                break;
-              }
-
-              _context2.next = 6;
-              return this.dbDocument.insert(_extends({}, data, this.pageIdentification));
-
-            case 6:
-              return _context2.abrupt('return', _context2.sent);
-
-            case 7:
-              return _context2.abrupt('return', result);
-
-            case 8:
-            case 'end':
-              return _context2.stop();
-          }
-        }
-      }, saveToDb, this);
-    })
-  }, {
-    key: 'fetchFromDb',
-    value: regeneratorRuntime.mark(function fetchFromDb() {
-      var res;
-      return regeneratorRuntime.wrap(function fetchFromDb$(_context3) {
-        while (1) {
-          switch (_context3.prev = _context3.next) {
-            case 0:
-              _context3.next = 2;
-              return this.dbDocument.findOne(this.pageIdentification);
-
-            case 2:
-              _context3.t0 = _context3.sent;
-
-              if (_context3.t0) {
-                _context3.next = 5;
-                break;
-              }
-
-              _context3.t0 = {};
-
-            case 5:
-              res = _context3.t0;
-              return _context3.abrupt('return', res);
-
-            case 7:
-            case 'end':
-              return _context3.stop();
-          }
-        }
-      }, fetchFromDb, this);
     })
   }]);
 

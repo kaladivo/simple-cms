@@ -1,6 +1,30 @@
 'use strict';
 
-var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+var _typeof6 = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _typeof5 = typeof Symbol === "function" && _typeof6(Symbol.iterator) === "symbol" ? function (obj) {
+  return typeof obj === "undefined" ? "undefined" : _typeof6(obj);
+} : function (obj) {
+  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof6(obj);
+};
+
+var _typeof4 = typeof Symbol === "function" && _typeof5(Symbol.iterator) === "symbol" ? function (obj) {
+  return typeof obj === "undefined" ? "undefined" : _typeof5(obj);
+} : function (obj) {
+  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof5(obj);
+};
+
+var _typeof3 = typeof Symbol === "function" && _typeof4(Symbol.iterator) === "symbol" ? function (obj) {
+  return typeof obj === "undefined" ? "undefined" : _typeof4(obj);
+} : function (obj) {
+  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof4(obj);
+};
+
+var _typeof2 = typeof Symbol === "function" && _typeof3(Symbol.iterator) === "symbol" ? function (obj) {
+  return typeof obj === "undefined" ? "undefined" : _typeof3(obj);
+} : function (obj) {
+  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof3(obj);
+};
 
 var _typeof = typeof Symbol === "function" && _typeof2(Symbol.iterator) === "symbol" ? function (obj) {
   return typeof obj === "undefined" ? "undefined" : _typeof2(obj);
@@ -11,16 +35,6 @@ var _typeof = typeof Symbol === "function" && _typeof2(Symbol.iterator) === "sym
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _extends = Object.assign || function (target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i];for (var key in source) {
-      if (Object.prototype.hasOwnProperty.call(source, key)) {
-        target[key] = source[key];
-      }
-    }
-  }return target;
-};
 
 var _createClass = function () {
   function defineProperties(target, props) {
@@ -82,125 +96,82 @@ function _inherits(subClass, superClass) {
   }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 }
 
-var SpecificPageModel = function (_Model) {
-  _inherits(SpecificPageModel, _Model);
+var AddableModel = function (_Model) {
+  _inherits(AddableModel, _Model);
 
-  function SpecificPageModel(data) {
-    _classCallCheck(this, SpecificPageModel);
+  function AddableModel(data) {
+    _classCallCheck(this, AddableModel);
 
-    var _this = _possibleConstructorReturn(this, (SpecificPageModel.__proto__ || Object.getPrototypeOf(SpecificPageModel)).call(this, data));
+    var _this = _possibleConstructorReturn(this, (AddableModel.__proto__ || Object.getPrototypeOf(AddableModel)).call(this, data));
 
-    _this.pageIdentification = data.pageIdentification;
-    _this.dbDocument = data.dbDocument;
+    _this.pugFile = '/elements/sections/addableModel.pug';
     return _this;
   }
 
-  _createClass(SpecificPageModel, [{
-    key: 'renderHtml',
-    value: regeneratorRuntime.mark(function renderHtml(request) {
-      var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      return regeneratorRuntime.wrap(function renderHtml$(_context) {
+  _createClass(AddableModel, [{
+    key: 'saveToDb',
+    value: regeneratorRuntime.mark(function saveToDb(values, request) {
+      var res;
+      return regeneratorRuntime.wrap(function saveToDb$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _context.t0 = data.values;
+              res = void 0;
 
-              if (_context.t0) {
-                _context.next = 5;
+              if (!request.query.id) {
+                _context.next = 7;
                 break;
               }
 
               _context.next = 4;
-              return this.fetchFromDb();
+              return this.parent.dbDocument.findOneAndUpdate(request.query.id, values);
 
             case 4:
-              _context.t0 = _context.sent;
-
-            case 5:
-              data.values = _context.t0;
-              _context.next = 8;
-              return _get(SpecificPageModel.prototype.__proto__ || Object.getPrototypeOf(SpecificPageModel.prototype), 'renderHtml', this).call(this, request, data);
-
-            case 8:
-              return _context.abrupt('return', _context.sent);
-
-            case 9:
-            case 'end':
-              return _context.stop();
-          }
-        }
-      }, renderHtml, this);
-    })
-  }, {
-    key: 'saveToDb',
-    value: regeneratorRuntime.mark(function saveToDb(data) {
-      var result;
-      return regeneratorRuntime.wrap(function saveToDb$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              _context2.next = 2;
-              return this.dbDocument.findOneAndUpdate(this.pageIdentification, _extends({}, data, this.pageIdentification));
-
-            case 2:
-              result = _context2.sent;
-
-              if (!(result.value == null)) {
-                _context2.next = 7;
-                break;
-              }
-
-              _context2.next = 6;
-              return this.dbDocument.insert(_extends({}, data, this.pageIdentification));
-
-            case 6:
-              return _context2.abrupt('return', _context2.sent);
+              res = _context.sent;
+              _context.next = 10;
+              break;
 
             case 7:
-              return _context2.abrupt('return', result);
+              _context.next = 9;
+              return this.parent.dbDocument.insert(values);
 
-            case 8:
+            case 9:
+              res = _context.sent;
+
+            case 10:
+              return _context.abrupt('return', res);
+
+            case 11:
             case 'end':
-              return _context2.stop();
+              return _context.stop();
           }
         }
       }, saveToDb, this);
     })
   }, {
-    key: 'fetchFromDb',
-    value: regeneratorRuntime.mark(function fetchFromDb() {
-      var res;
-      return regeneratorRuntime.wrap(function fetchFromDb$(_context3) {
+    key: 'renderHtml',
+    value: regeneratorRuntime.mark(function renderHtml(request) {
+      var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      return regeneratorRuntime.wrap(function renderHtml$(_context2) {
         while (1) {
-          switch (_context3.prev = _context3.next) {
+          switch (_context2.prev = _context2.next) {
             case 0:
-              _context3.next = 2;
-              return this.dbDocument.findOne(this.pageIdentification);
+              _context2.next = 2;
+              return _get(AddableModel.prototype.__proto__ || Object.getPrototypeOf(AddableModel.prototype), 'renderHtml', this).call(this, request, data);
 
             case 2:
-              _context3.t0 = _context3.sent;
+              return _context2.abrupt('return', _context2.sent);
 
-              if (_context3.t0) {
-                _context3.next = 5;
-                break;
-              }
-
-              _context3.t0 = {};
-
-            case 5:
-              res = _context3.t0;
-              return _context3.abrupt('return', res);
-
-            case 7:
+            case 3:
             case 'end':
-              return _context3.stop();
+              return _context2.stop();
           }
         }
-      }, fetchFromDb, this);
+      }, renderHtml, this);
     })
   }]);
 
-  return SpecificPageModel;
+  return AddableModel;
 }(_Model3.default);
 
-exports.default = SpecificPageModel;
+exports.default = AddableModel;
