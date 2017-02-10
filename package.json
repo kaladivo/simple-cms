@@ -2,9 +2,10 @@
   "name": "simple-cms",
   "version": "0.0.2",
   "description": "Simple content management system build in node",
-  "main": "index.js",
+  "main": "compiled/index.js",
   "scripts": {
-    "test": "echo \"Tests will be added in next versions.\" && exit 1"
+    "test": "echo \"Tests will be added in next versions.\" && exit 1",
+    "compile": "babel . -d compiled --ignore node_modules,test --require babel-polyfill"
   },
   "author": "David Novák <mail@davenov.com> (https://davenov.com)",
   "license": "Apache-2.0",
