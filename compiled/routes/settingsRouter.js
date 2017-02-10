@@ -208,26 +208,25 @@ settingsRouter.get('/removeUser/:userId', regeneratorRuntime.mark(function _call
           userId = this.params.userId;
 
           if (!(userId == this.req.user._id.toString())) {
-            _context4.next = 6;
+            _context4.next = 5;
             break;
           }
 
-          console.log(userId);
           this.flash('error', _i18n2.default.__("You can not remove yourself"));
           this.redirect(settings.adminUrl + "/settings");
           return _context4.abrupt('return');
 
-        case 6:
-          _context4.next = 8;
+        case 5:
+          _context4.next = 7;
           return _users2.default.remove(userId);
 
-        case 8:
+        case 7:
           res = _context4.sent;
 
           this.flash('message', _i18n2.default.__("User removed"));
           this.redirect(settings.adminUrl + "/settings");
 
-        case 11:
+        case 10:
         case 'end':
           return _context4.stop();
       }

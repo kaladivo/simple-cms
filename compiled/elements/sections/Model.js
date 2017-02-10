@@ -116,14 +116,21 @@ var Model = function (_ParentSection) {
               return _context2.abrupt('return', _context2.sent);
 
             case 7:
-              _context2.next = 9;
-              return this.saveToDb(request.body, request);
+              _context2.t0 = this;
+              _context2.next = 10;
+              return this._getDataToSave(request.body);
 
-            case 9:
+            case 10:
+              _context2.t1 = _context2.sent;
+              _context2.t2 = request;
+              _context2.next = 14;
+              return _context2.t0.saveToDb.call(_context2.t0, _context2.t1, _context2.t2);
+
+            case 14:
               res = _context2.sent;
               return _context2.abrupt('return', res);
 
-            case 11:
+            case 16:
             case 'end':
               return _context2.stop();
           }
@@ -178,6 +185,84 @@ var Model = function (_ParentSection) {
           }
         }
       }, renderHtml, this);
+    })
+  }, {
+    key: '_getDataToSave',
+    value: regeneratorRuntime.mark(function _getDataToSave(postData) {
+      var _this2 = this;
+
+      var valuesToStore, _loop, key, _ret;
+
+      return regeneratorRuntime.wrap(function _getDataToSave$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              valuesToStore = {};
+              _loop = regeneratorRuntime.mark(function _loop(key) {
+                var field;
+                return regeneratorRuntime.wrap(function _loop$(_context4) {
+                  while (1) {
+                    switch (_context4.prev = _context4.next) {
+                      case 0:
+                        field = _this2.fields.find(function (field) {
+                          return field.name == key;
+                        });
+
+                        if (field) {
+                          _context4.next = 3;
+                          break;
+                        }
+
+                        return _context4.abrupt('return', 'continue');
+
+                      case 3:
+                        _context4.next = 5;
+                        return field.getValueToStore(postData[key]);
+
+                      case 5:
+                        valuesToStore[key] = _context4.sent;
+
+                      case 6:
+                      case 'end':
+                        return _context4.stop();
+                    }
+                  }
+                }, _loop, _this2);
+              });
+              _context5.t0 = regeneratorRuntime.keys(postData);
+
+            case 3:
+              if ((_context5.t1 = _context5.t0()).done) {
+                _context5.next = 11;
+                break;
+              }
+
+              key = _context5.t1.value;
+              return _context5.delegateYield(_loop(key), 't2', 6);
+
+            case 6:
+              _ret = _context5.t2;
+
+              if (!(_ret === 'continue')) {
+                _context5.next = 9;
+                break;
+              }
+
+              return _context5.abrupt('continue', 3);
+
+            case 9:
+              _context5.next = 3;
+              break;
+
+            case 11:
+              return _context5.abrupt('return', valuesToStore);
+
+            case 12:
+            case 'end':
+              return _context5.stop();
+          }
+        }
+      }, _getDataToSave, this);
     })
   }]);
 

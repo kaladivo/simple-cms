@@ -81,7 +81,7 @@ sectionsRouter.get(/(.*)/, regeneratorRuntime.mark(function _callee(next) {
 }));
 
 sectionsRouter.post(/(.*)/, regeneratorRuntime.mark(function _callee2(next) {
-  var result, sectionHtml;
+  var result, sectionHtml, backInfo;
   return regeneratorRuntime.wrap(function _callee2$(_context2) {
     while (1) {
       switch (_context2.prev = _context2.next) {
@@ -92,33 +92,37 @@ sectionsRouter.post(/(.*)/, regeneratorRuntime.mark(function _callee2(next) {
         case 2:
           result = _context2.sent;
           sectionHtml = void 0;
+          backInfo = void 0;
+
+          if (this.request.query.id || this.request.query.action == "new") backInfo = { url: this.section.getUrl(), title: "Back to " + this.section.title.toLowerCase() };
           // console.log(result);
 
           if (!(!result || result._id)) {
-            _context2.next = 10;
+            _context2.next = 12;
             break;
           }
 
-          _context2.next = 7;
+          _context2.next = 9;
           return this.section.renderHtml(this.request, { values: result });
 
-        case 7:
+        case 9:
           sectionHtml = _context2.sent;
-          _context2.next = 11;
+          _context2.next = 13;
           break;
 
-        case 10:
+        case 12:
           sectionHtml = result;
 
-        case 11:
+        case 13:
           this.body = compileSectionPage({
             section: this.section,
             sectionHtml: sectionHtml,
             settings: settings,
-            loggedUser: this.req.user
+            loggedUser: this.req.user,
+            backInfo: backInfo
           });
 
-        case 12:
+        case 14:
         case 'end':
           return _context2.stop();
       }

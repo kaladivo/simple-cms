@@ -91,7 +91,6 @@ settingsRouter.post('/changePassword', function*(next) {
 settingsRouter.get('/removeUser/:userId', function*(next) {
   const {userId} = this.params;
   if(userId == this.req.user._id.toString()) {
-    console.log(userId);
     this.flash('error', i18n.__("You can not remove yourself"));
     this.redirect(settings.adminUrl + "/settings");
     return;

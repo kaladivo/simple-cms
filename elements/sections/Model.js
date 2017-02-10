@@ -26,7 +26,7 @@ export default class Model extends ParentSection {
     let errors = yield this.validate(request);
     if(errors) return yield this.renderHtml(request, {errors, values: request.body});
 
-    let res = yield this.saveToDb(request.body, request);
+    let res = yield this.saveToDb(yield this._getDataToSave(request.body), request);
     return res;
   }
 
@@ -46,5 +46,16 @@ export default class Model extends ParentSection {
       request,
       ... data
     });
+  }
+
+  * _getDataToSave(postData) {
+    let valuesToStore = {};
+    for(let key in postData) {
+      let field = this.fields.find(field => field.name == key);
+      if(!field) continue;
+
+      valuesToStore[key] = yield field.getValueToStore(postData[key]);
+    }
+    return valuesToStore;
   }
 }

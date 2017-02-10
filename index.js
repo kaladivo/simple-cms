@@ -79,3 +79,4 @@ export {default as SpecificPageModel} from "./elements/sections/SpecificPageMode
 export {default as AddableModel} from "./elements/sections/AddableModel";
 export {default as TextField} from "./elements/fields/TextField";
 export {default as EditorField} from "./elements/fields/EditorField";
+export {default as DateField} from "./elements/fields/DateField";

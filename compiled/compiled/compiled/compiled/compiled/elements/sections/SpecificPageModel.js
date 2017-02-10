@@ -102,7 +102,8 @@ var SpecificPageModel = function (_Model) {
 
     var _this = _possibleConstructorReturn(this, (SpecificPageModel.__proto__ || Object.getPrototypeOf(SpecificPageModel)).call(this, data));
 
-    _this.pageIdentification = _this.pageIdentification;
+    _this.pageIdentification = data.pageIdentification;
+    _this.dbDocument = data.dbDocument;
     return _this;
   }
 
@@ -151,20 +152,21 @@ var SpecificPageModel = function (_Model) {
           switch (_context2.prev = _context2.next) {
             case 0:
               _context2.next = 2;
-              return pages.findOneAndUpdate(this.pageIdentification, _extends({}, data, this.pageIdentification));
+              return this.dbDocument.findOneAndUpdate(this.pageIdentification, _extends({}, data, this.pageIdentification));
 
             case 2:
               result = _context2.sent;
 
-              console.log(result);
-
-              if (!(result.value == null)) {
+              if (!(result.value === null)) {
                 _context2.next = 7;
                 break;
               }
 
-              _context2.next = 7;
-              return pages.insert(_extends({}, data, this.pageIdentification));
+              _context2.next = 6;
+              return this.dbDocument.insert(_extends({}, data, this.pageIdentification));
+
+            case 6:
+              return _context2.abrupt('return', _context2.sent);
 
             case 7:
               return _context2.abrupt('return', result);
@@ -185,7 +187,7 @@ var SpecificPageModel = function (_Model) {
           switch (_context3.prev = _context3.next) {
             case 0:
               _context3.next = 2;
-              return pages.findOne(this.pageIdentification);
+              return this.dbDocument.findOne(this.pageIdentification);
 
             case 2:
               _context3.t0 = _context3.sent;

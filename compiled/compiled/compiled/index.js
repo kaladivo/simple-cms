@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.EditorField = exports.TextField = exports.AddableModel = exports.SpecificPageModel = exports.List = exports.AddableList = undefined;
+exports.DateField = exports.EditorField = exports.TextField = exports.AddableModel = exports.SpecificPageModel = exports.List = exports.AddableList = undefined;
 
 exports.default = function (settings) {
   (0, _settings.initSettings)(settings);
@@ -160,6 +160,15 @@ Object.defineProperty(exports, 'EditorField', {
   enumerable: true,
   get: function get() {
     return _interopRequireDefault(_EditorField).default;
+  }
+});
+
+var _DateField = require('./elements/fields/DateField');
+
+Object.defineProperty(exports, 'DateField', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_DateField).default;
   }
 });
 

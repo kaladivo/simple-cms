@@ -151,15 +151,16 @@ var SpecificPageModel = function (_Model) {
             case 2:
               result = _context2.sent;
 
-              console.log(result);
-
-              if (!(result.value == null)) {
+              if (!(result.value === null)) {
                 _context2.next = 7;
                 break;
               }
 
-              _context2.next = 7;
+              _context2.next = 6;
               return this.dbDocument.insert(_extends({}, data, this.pageIdentification));
+
+            case 6:
+              return _context2.abrupt('return', _context2.sent);
 
             case 7:
               return _context2.abrupt('return', result);

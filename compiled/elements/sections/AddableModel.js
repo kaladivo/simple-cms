@@ -49,31 +49,36 @@ var AddableModel = function (_Model) {
           switch (_context.prev = _context.next) {
             case 0:
               res = void 0;
+              _context.next = 3;
+              return this._getDataToSave(values);
+
+            case 3:
+              values = _context.sent;
 
               if (!request.query.id) {
-                _context.next = 7;
+                _context.next = 10;
                 break;
               }
 
-              _context.next = 4;
+              _context.next = 7;
               return this.parent.dbDocument.findOneAndUpdate(request.query.id, values);
 
-            case 4:
+            case 7:
               res = _context.sent;
-              _context.next = 10;
+              _context.next = 13;
               break;
 
-            case 7:
-              _context.next = 9;
+            case 10:
+              _context.next = 12;
               return this.parent.dbDocument.insert(values);
 
-            case 9:
+            case 12:
               res = _context.sent;
 
-            case 10:
+            case 13:
               return _context.abrupt('return', res);
 
-            case 11:
+            case 14:
             case 'end':
               return _context.stop();
           }

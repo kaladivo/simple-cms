@@ -145,7 +145,7 @@ var SpecificPageModel = function (_Model) {
             case 2:
               result = _context2.sent;
 
-              if (!(result.value == null)) {
+              if (!(result.value === null)) {
                 _context2.next = 7;
                 break;
               }
